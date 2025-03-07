@@ -1,0 +1,24 @@
+
+<div>
+  <h2>Verificar si un número es par o impar</h2>
+  <input type="number" [(ngModel)]="numero">
+  <p *ngIf="numero !== null">
+    El número {{ numero }} es {{ numero % 2 === 0 ? 'par' : 'impar' }}.
+  </p>
+  <h2>Ingresar dos números enteros</h2>
+  <input type="number" [(ngModel)]="inicio" placeholder="Inicio">
+  <input type="number" [(ngModel)]="fin" placeholder="Fin">
+  <button (click)="mostrarParesImpares()">Mostrar Pares e Impares</button>
+  <div *ngIf="inicio !== null && fin !== null">
+    <p>Números pares:</p>
+    <ul>
+      <li *ngFor="let num of numerosPares">{{ num }}</li>
+    </ul>
+    <p>Números impares:</p>
+    <ul>
+      <li *ngFor="let num of numerosImpares">{{ num }}</li>
+    </ul>
+  </div>
+</div>
+
+<router-outlet />
