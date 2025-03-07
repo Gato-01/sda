@@ -1,24 +1,85 @@
-
-<div>
-  <h2>Verificar si un número es par o impar</h2>
-  <input type="number" [(ngModel)]="numero">
-  <p *ngIf="numero !== null">
-    El número {{ numero }} es {{ numero % 2 === 0 ? 'par' : 'impar' }}.
-  </p>
-  <h2>Ingresar dos números enteros</h2>
-  <input type="number" [(ngModel)]="inicio" placeholder="Inicio">
-  <input type="number" [(ngModel)]="fin" placeholder="Fin">
-  <button (click)="mostrarParesImpares()">Mostrar Pares e Impares</button>
-  <div *ngIf="inicio !== null && fin !== null">
-    <p>Números pares:</p>
-    <ul>
-      <li *ngFor="let num of numerosPares">{{ num }}</li>
-    </ul>
-    <p>Números impares:</p>
-    <ul>
-      <li *ngFor="let num of numerosImpares">{{ num }}</li>
-    </ul>
-  </div>
+<!-- app.component.html -->
+<div class="container">
+  <h1 class="main-title">{{ title }}</h1>
+  
+  <!-- Sección para verificar un solo número -->
+  <section class="card">
+    <h2 class="section-title">Verificar si un número es par o impar</h2>
+    <div class="form-group">
+      <label for="numero">Ingresa un número:</label>
+      <input 
+        type="number" 
+        id="numero"
+        class="form-control" 
+        [(ngModel)]="numero" 
+        placeholder="Ej: 42">
+    </div>
+    
+    <div class="result" *ngIf="numero !== null">
+      <p>
+        El número <span class="highlight">{{ numero }}</span> es 
+        <span class="badge" [ngClass]="esPar(numero) ? 'badge-success' : 'badge-primary'">
+          {{ esPar(numero) ? 'par' : 'impar' }}
+        </span>.
+      </p>
+    </div>
+  </section>
+  
+  <!-- Sección para mostrar pares e impares en un rango -->
+  <section class="card">
+    <h2 class="section-title">Generar números pares e impares en un rango</h2>
+    
+    <div class="form-row">
+      <div class="form-group">
+        <label for="inicio">Número inicial:</label>
+        <input 
+          type="number" 
+          id="inicio"
+          class="form-control" 
+          [(ngModel)]="inicio" 
+          placeholder="Ej: 1">
+      </div>
+      
+      <div class="form-group">
+        <label for="fin">Número final:</label>
+        <input 
+          type="number" 
+          id="fin"
+          class="form-control" 
+          [(ngModel)]="fin" 
+          placeholder="Ej: 10">
+      </div>
+    </div>
+    
+    <div class="alert alert-danger" *ngIf="errorRango">
+      {{ errorRango }}
+    </div>
+    
+    <div class="button-group">
+      <button class="btn btn-primary" (click)="mostrarParesImpares()">
+        Generar listas
+      </button>
+      <button class="btn btn-secondary" (click)="limpiar()">
+        Limpiar todo
+      </button>
+    </div>
+    
+    <div class="results-container" *ngIf="numerosPares.length > 0 || numerosImpares.length > 0">
+      <div class="results-column">
+        <h3>Números pares</h3>
+        <ul class="number-list pares">
+          <li *ngFor="let num of numerosPares">{{ num }}</li>
+        </ul>
+      </div>
+      
+      <div class="results-column">
+        <h3>Números impares</h3>
+        <ul class="number-list impares">
+          <li *ngFor="let num of numerosImpares">{{ num }}</li>
+        </ul>
+      </div>
+    </div>
+  </section>
 </div>
 
 <router-outlet />
